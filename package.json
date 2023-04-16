@@ -19,7 +19,8 @@
     "mongoose": "^7.0.3",
     "node-telegram-bot-api": "^0.61.0",
     "nodemon": "^2.0.22",
-    "npm": "^9.6.4"
+    "npm": "^9.6.4",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
