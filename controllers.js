@@ -38,14 +38,24 @@ const contacts = async (body) => {
 
   if (!user) {
     text = `You don't have an account yet. Create an account using  /start`;
-    sendMessage(id, text);
+    return sendMessage(id, text);
   }
+
+  text = `Select which contact category you want to add`;
+  let buttonDisplay = {
+    reply_markup: {
+      keyboard: [["High Priority"], ["Medium Priority"], ["Low Priority"]],
+      one_time_keyboard: true,
+    },
+  };
+  return sendMessage(id, text, buttonDisplay);
 };
 
-const sendMessage = async (id, text) => {
+const sendMessage = async (id, text, extensions) => {
   const res = await axios.post(`${TELEGRAM_API}/sendMessage`, {
     chat_id: id,
     text,
+    ...extensions,
   });
 };
 
