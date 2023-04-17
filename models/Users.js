@@ -3,10 +3,7 @@ const validator = require("validator");
 
 const UserSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-    },
-    lastName: {
+    name: {
       type: String,
     },
     userName: {
@@ -38,5 +35,12 @@ UserSchema.path("phoneNumber").validate(async (value) => {
   });
   return !numberCount;
 }, "This phone number has been used by another user.");
+
+UserSchema.path("chatId").validate(async (value) => {
+  const numberCount = await mongoose.models.User.countDocuments({
+    chatId: value,
+  });
+  return !numberCount;
+}, "You already have an account.");
 
 module.exports = mongoose.model("User", UserSchema);

@@ -3,10 +3,7 @@ const validator = require("validator");
 
 const ContactSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-    },
-    lastName: {
+    name: {
       type: String,
     },
     userName: {
