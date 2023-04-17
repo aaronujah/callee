@@ -6,10 +6,6 @@ const ContactSchema = new mongoose.Schema(
     name: {
       type: String,
     },
-    userName: {
-      type: String,
-      unique: true,
-    },
     phoneNumber: {
       type: String,
     },
