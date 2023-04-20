@@ -8,12 +8,22 @@ const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
 let text = "";
 
 const controller = async (body) => {
+  const bodyText = body.message.text.toLowerCase();
   console.log(body.message);
-  if (body.message.text === "/start") {
+
+  if (bodyText === "/start") {
     await start(body);
     sendMessage(body.message.from.id, text);
-  } else if (body.message.text === "/contacts") {
+  } else if (bodyText === "/contacts") {
     await contacts(body);
+  } else if (bodyText === "/timer") {
+    await timer(body);
+  } else if (
+    bodyText == "high priority" ||
+    bodyText == "medium priority" ||
+    bodyText == "low priority"
+  ) {
+    await addContactPriority(body);
   } else if (body.message.contact) {
     await saveContact(body);
   }
@@ -94,9 +104,69 @@ const saveContact = async (body) => {
   } else {
     await sendMessage(
       id,
-      `Reply the contact your just sent with the category it should be added to...`
+      `Reply the contact you just sent with the category it should be added to...`
     );
   }
+};
+
+const addContactPriority = async (body) => {
+  let id = body.message.from.id;
+
+  user = await User.findOne({ chatId: id });
+
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
+
+  category = body.message.reply_to_message;
+  if (category) {
+    const { first_name, last_name, phone_number } = category.contact;
+
+    let contact = {
+      name: `${first_name} ${last_name === undefined ? "" : last_name}`,
+      phoneNumber: phone_number,
+      createdBy: user._id,
+    };
+
+    switch (body.message.text) {
+      case "high priority":
+        contact.priority = "High";
+        break;
+      case "medium priority":
+        contact.priority = "Medium";
+        break;
+      case "low priority":
+        contact.priority = "Low";
+        break;
+    }
+
+    await Contact.create(contact);
+    await sendMessage(
+      id,
+      `Contact has been added to ${body.message.text}.\n\nAdd another contact by repeating the process...`
+    );
+  }
+};
+
+const timer = async (body) => {
+  let id = body.message.from.id;
+
+  user = await User.findOne({ chatId: id });
+
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
+
+  text = `Select the time you want to be getting your daily list `;
+  let buttonDisplay = {
+    reply_markup: {
+      keyboard: [["8am"], ["12noon"], ["3pm"], ["6pm"]],
+      one_time_keyboard: true,
+    },
+  };
+  return sendMessage(id, text, buttonDisplay);
 };
 
 const sendMessage = async (id, text, extensions) => {
