@@ -24,6 +24,13 @@ const controller = async (body) => {
     bodyText == "low priority"
   ) {
     await addContactPriority(body);
+  } else if (
+    bodyText == "8am" ||
+    bodyText == "12noon" ||
+    bodyText == "3pm" ||
+    bodyText == "6pm"
+  ) {
+    await setAutoTime(body);
   } else if (body.message.contact) {
     await saveContact(body);
   }
@@ -167,6 +174,36 @@ const timer = async (body) => {
     },
   };
   return sendMessage(id, text, buttonDisplay);
+};
+
+const setAutoTime = async (body) => {
+  let id = body.message.from.id;
+  textTime = body.message.text.toLowerCase();
+
+  switch (textTime) {
+    case "8am":
+      autoTime = new Date(0, 0, 0, 8, 0, 0);
+      break;
+    case "12noon":
+      autoTime = new Date(0, 0, 0, 12, 0, 0);
+      break;
+    case "3pm":
+      autoTime = new Date(0, 0, 0, 13, 0, 0);
+      break;
+    case "6pm":
+      autoTime = new Date(0, 0, 0, 18, 0, 0);
+      break;
+  }
+
+  user = await User.findOneAndUpdate(
+    { chatId: id },
+    { autoUpdateTime: autoTime }
+  );
+
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
 };
 
 const sendMessage = async (id, text, extensions) => {
