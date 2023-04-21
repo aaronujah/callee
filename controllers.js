@@ -18,6 +18,8 @@ const controller = async (body) => {
     await contacts(body);
   } else if (bodyText === "/timer") {
     await timer(body);
+  } else if (bodyText === "/help") {
+    await help(body);
   } else if (
     bodyText == "high priority" ||
     bodyText == "medium priority" ||
@@ -69,6 +71,12 @@ const contacts = async (body) => {
     },
   };
   return sendMessage(id, text, buttonDisplay);
+};
+
+const help = async (body) => {
+  let id = body.message.from.id;
+  text = ``;
+  return sendMessage(id, text);
 };
 
 const saveContact = async (body) => {
