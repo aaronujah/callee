@@ -166,6 +166,7 @@ const addContactPriority = async (body) => {
   category = body.message.reply_to_message;
   if (category) {
     const { first_name, last_name, phone_number } = category.contact;
+    date = new Date();
 
     let contact = {
       name: `${first_name} ${last_name === undefined ? "" : last_name}`,
@@ -173,22 +174,22 @@ const addContactPriority = async (body) => {
       createdBy: user._id,
     };
 
-    switch (body.message.text) {
+    switch (body.message.text.toLowerCase()) {
       case "high priority":
         contact.priority = "High";
-        contact.lastContact = new Date(new Date().setDate(date.getDate() - 14))
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 15))
           .toISOString()
           .split("T")[0];
         break;
       case "medium priority":
         contact.priority = "Medium";
-        contact.lastContact = new Date(new Date().setDate(date.getDate() - 30))
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 31))
           .toISOString()
           .split("T")[0];
         break;
       case "low priority":
         contact.priority = "Low";
-        contact.lastContact = new Date(new Date().setDate(date.getDate() - 60))
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 61))
           .toISOString()
           .split("T")[0];
         break;
