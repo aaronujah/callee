@@ -24,16 +24,16 @@ const controller = async (body) => {
   } else if (bodyText === "/help") {
     await help(body);
   } else if (
-    bodyText == "high priority" ||
-    bodyText == "medium priority" ||
-    bodyText == "low priority"
+    bodyText === "high priority" ||
+    bodyText === "medium priority" ||
+    bodyText === "low priority"
   ) {
     await addContactPriority(body);
   } else if (
-    bodyText == "8am" ||
-    bodyText == "12noon" ||
-    bodyText == "3pm" ||
-    bodyText == "6pm"
+    bodyText === "8am" ||
+    bodyText === "12noon" ||
+    bodyText === "3pm" ||
+    bodyText === "6pm"
   ) {
     await setAutoTime(body);
   } else if (body.message.contact) {
