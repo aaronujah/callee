@@ -120,19 +120,19 @@ const saveContact = async (body) => {
     };
 
     switch (category.text) {
-      case "High Priority":
+      case "high priority":
         contact.priority = "High";
         contact.lastContact = new Date(new Date().setDate(date.getDate() - 14))
           .toISOString()
           .split("T")[0];
         break;
-      case "Medium Priority":
+      case "medium priority":
         contact.priority = "Medium";
         contact.lastContact = new Date(new Date().setDate(date.getDate() - 30))
           .toISOString()
           .split("T")[0];
         break;
-      case "Low Priority":
+      case "low priority":
         contact.priority = "Low";
         contact.lastContact = new Date(new Date().setDate(date.getDate() - 60))
           .toISOString()
@@ -176,12 +176,21 @@ const addContactPriority = async (body) => {
     switch (body.message.text) {
       case "high priority":
         contact.priority = "High";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 14))
+          .toISOString()
+          .split("T")[0];
         break;
       case "medium priority":
         contact.priority = "Medium";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 30))
+          .toISOString()
+          .split("T")[0];
         break;
       case "low priority":
         contact.priority = "Low";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 60))
+          .toISOString()
+          .split("T")[0];
         break;
     }
 
