@@ -1,5 +1,4 @@
 const Contact = require("./models/Contacts");
-const { sendMessage } = require("./controllers");
 require("dotenv").config({ path: "./config.env" });
 const axios = require("axios");
 
@@ -49,7 +48,6 @@ exports.newSuggestion = async (id, user) => {
   medium = medium[Math.floor(Math.random() * medium.length)];
   low = low[Math.floor(Math.random() * low.length)];
 
-  //   now = sendMessage(id, "Here is your suggestion: High , Medium , Low");
   sendContact(id, high, "High");
   sendContact(id, medium, "Medium");
   sendContact(id, low, "Low");

@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema(
       unique: true,
     },
     autoUpdateTime: {
-      type: Date,
+      type: String,
+      default: "8am",
     },
   },
   { timestamps: true },
