@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema(
     },
     autoUpdateTime: {
       type: String,
+      enum: ["8am", "12noon", "3pm", "6pm"],
       default: "8am",
     },
   },

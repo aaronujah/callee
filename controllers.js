@@ -219,16 +219,16 @@ const setAutoTime = async (body) => {
 
   switch (textTime) {
     case "8am":
-      autoTime = new Date(0, 0, 0, 8, 0, 0);
+      autoTime = "8am";
       break;
     case "12noon":
-      autoTime = new Date(0, 0, 0, 12, 0, 0);
+      autoTime = "12noon";
       break;
     case "3pm":
-      autoTime = new Date(0, 0, 0, 13, 0, 0);
+      autoTime = "3pm";
       break;
     case "6pm":
-      autoTime = new Date(0, 0, 0, 18, 0, 0);
+      autoTime = "6pm";
       break;
   }
 
