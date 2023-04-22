@@ -9,7 +9,7 @@ const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
 let text = "";
 
 exports.controller = async (body) => {
-  const bodyText = body.message.text.toLowerCase();
+  const bodyText = body.message.text?.toLowerCase();
   console.log(body.message);
 
   if (bodyText === "/start") {
