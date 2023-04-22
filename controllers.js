@@ -1,5 +1,6 @@
 const User = require("./models/Users");
 const Contact = require("./models/Contacts");
+const { newSuggestion } = require("./suggest");
 require("dotenv").config({ path: "./config.env" });
 const axios = require("axios");
 
@@ -18,6 +19,8 @@ const controller = async (body) => {
     await contacts(body);
   } else if (bodyText === "/timer") {
     await timer(body);
+  } else if (bodyText === "/suggest") {
+    await suggest(body);
   } else if (bodyText === "/help") {
     await help(body);
   } else if (
@@ -71,6 +74,14 @@ const contacts = async (body) => {
     },
   };
   return sendMessage(id, text, buttonDisplay);
+};
+
+const suggest = async (body) => {
+  let id = body.message.from.id;
+  text = ``;
+
+  text = newSuggestion(id);
+  return sendMessage(id, text);
 };
 
 const help = async (body) => {
