@@ -3,7 +3,7 @@ require("dotenv").config({ path: "./config.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const controller = require("./controllers");
+const { controller } = require("./controllers");
 
 const { TOKEN, SERVER_URL } = process.env;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;

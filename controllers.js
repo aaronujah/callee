@@ -8,7 +8,7 @@ const { TOKEN } = process.env;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
 let text = "";
 
-const controller = async (body) => {
+exports.controller = async (body) => {
   const bodyText = body.message.text.toLowerCase();
   console.log(body.message);
 
@@ -78,10 +78,18 @@ const contacts = async (body) => {
 
 const suggest = async (body) => {
   let id = body.message.from.id;
-  text = ``;
+  user = await User.findOne({ chatId: id });
 
-  text = newSuggestion(id);
-  return sendMessage(id, text);
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
+
+  try {
+    contacts = newSuggestion(id, user);
+  } catch (ex) {
+    console.log(ex.message);
+  }
 };
 
 const help = async (body) => {
@@ -225,12 +233,10 @@ const setAutoTime = async (body) => {
   }
 };
 
-const sendMessage = async (id, text, extensions) => {
+exports.sendMessage = async (id, text, extensions) => {
   const res = await axios.post(`${TELEGRAM_API}/sendMessage`, {
     chat_id: id,
     text,
     ...extensions,
   });
 };
-
-module.exports = controller;
