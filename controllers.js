@@ -241,9 +241,14 @@ const setAutoTime = async (body) => {
     text = `You don't have an account yet. Create an account using  /start`;
     return sendMessage(id, text);
   }
+
+  return sendMessage(
+    id,
+    "Your automatic daily list timer has been set succesfully"
+  );
 };
 
-exports.sendMessage = async (id, text, extensions) => {
+const sendMessage = async (id, text, extensions) => {
   const res = await axios.post(`${TELEGRAM_API}/sendMessage`, {
     chat_id: id,
     text,
