@@ -20,6 +20,7 @@ const ContactSchema = new mongoose.Schema(
     },
     lastContact: {
       type: Date,
+      default: Date.now(),
     },
     lastRemark: { type: String },
   },

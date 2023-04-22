@@ -111,6 +111,7 @@ const saveContact = async (body) => {
   category = body.message.reply_to_message;
   if (category) {
     const { first_name, last_name, phone_number } = body.message.contact;
+    date = new Date();
 
     let contact = {
       name: `${first_name} ${last_name === undefined ? "" : last_name}`,
@@ -121,12 +122,21 @@ const saveContact = async (body) => {
     switch (category.text) {
       case "High Priority":
         contact.priority = "High";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 14))
+          .toISOString()
+          .split("T")[0];
         break;
       case "Medium Priority":
         contact.priority = "Medium";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 30))
+          .toISOString()
+          .split("T")[0];
         break;
       case "Low Priority":
         contact.priority = "Low";
+        contact.lastContact = new Date(new Date().setDate(date.getDate() - 60))
+          .toISOString()
+          .split("T")[0];
         break;
     }
 
