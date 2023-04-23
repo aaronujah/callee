@@ -36,6 +36,8 @@ exports.controller = async (body) => {
     bodyText === "6pm"
   ) {
     await setAutoTime(body);
+  } else if (bodyText.split(":")[0] === "remark") {
+    await addRemark(body);
   } else if (body.message.contact) {
     await saveContact(body);
   }
@@ -256,6 +258,30 @@ const setAutoTime = async (body) => {
     id,
     "Your automatic daily list timer has been set succesfully"
   );
+};
+
+const addRemark = async (body) => {
+  let id = body.message.from.id;
+
+  user = await User.findOne({ chatId: id });
+
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
+
+  message = body.message.reply_to_message;
+  if (message && message.from.id === "6190994977") {
+    contact = await Contact.findOneAndUpdate(
+      { createdBy: user.id, phoneNumber: message.contact.phone_number },
+      { lastRemark: body.message.text.split(":")[1] }
+    );
+
+    return sendMessage(
+      user.chatId,
+      `Your remark for ${message.contact.first_name} has been added`
+    );
+  }
 };
 
 const sendMessage = async (id, text, extensions) => {
