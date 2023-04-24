@@ -12,3 +12,11 @@ exports.sendMessage = async (id, text, extensions) => {
     ...extensions,
   });
 };
+
+exports.sendContact = async (id, contact) => {
+  const res = await axios.post(`${TELEGRAM_API}/sendContact`, {
+    chat_id: id,
+    phone_number: contact.phoneNumber,
+    first_name: contact.name,
+  });
+};

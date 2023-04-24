@@ -1,9 +1,5 @@
 const Contact = require("./models/Contacts");
-require("dotenv").config({ path: "./config.env" });
-const axios = require("axios");
-
-const { TOKEN } = process.env;
-const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
+const { sendMessage, sendContact } = require("./sendMessage");
 
 exports.newSuggestion = async (id, user) => {
   date = new Date();
@@ -54,17 +50,13 @@ exports.newSuggestion = async (id, user) => {
   return { high, medium, low };
 };
 
-const sendContact = async (id, contact, priority) => {
+const sender = async (id, contact, priority) => {
   try {
-    const res = await axios.post(`${TELEGRAM_API}/sendContact`, {
-      chat_id: id,
-      phone_number: contact.phoneNumber,
-      first_name: contact.name,
-    });
+    await sendContact(id, contact);
   } catch (error) {
-    const res = await axios.post(`${TELEGRAM_API}/sendMessage`, {
-      chat_id: id,
-      text: `You don't have contacts in your ${priority} priority list`,
-    });
+    await sendMessage(
+      id,
+      `You don't have contacts in your ${priority} priority list`
+    );
   }
 };
