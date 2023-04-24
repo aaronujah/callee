@@ -1,14 +1,10 @@
 const User = require("./models/Users");
 const Contact = require("./models/Contacts");
 const { newSuggestion } = require("./suggest");
-require("dotenv").config({ path: "./config.env" });
 const { sendMessage } = require("./sendMessage");
+const { start } = require("./controllers/start");
 
-const { TOKEN } = process.env;
-const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
-let text = "";
-
-exports.controller = async (body) => {
+exports.router = async (body) => {
   const bodyText = body.message.text?.toLowerCase();
   console.log(body.message);
 
@@ -40,21 +36,6 @@ exports.controller = async (body) => {
     await addRemark(body);
   } else if (body.message.contact) {
     await saveContact(body);
-  }
-};
-
-const start = async (body) => {
-  let { first_name, id, last_name } = body.message.from;
-
-  let user = {};
-  user.chatId = id;
-  user.name = `${first_name} ${last_name === undefined ? "" : last_name}`;
-  try {
-    await User.create(user);
-    text = `Your account was created successfully. 
-You can now setup contacts into different categories using /contacts`;
-  } catch (ex) {
-    text = ex.message;
   }
 };
 
