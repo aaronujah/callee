@@ -2,7 +2,7 @@ const User = require("./models/Users");
 const Contact = require("./models/Contacts");
 const { newSuggestion } = require("./suggest");
 require("dotenv").config({ path: "./config.env" });
-const axios = require("axios");
+const { sendMessage } = require("./sendMessage");
 
 const { TOKEN } = process.env;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
@@ -282,12 +282,4 @@ const addRemark = async (body) => {
       `Your remark for ${message.contact.first_name} has been added`
     );
   }
-};
-
-const sendMessage = async (id, text, extensions) => {
-  const res = await axios.post(`${TELEGRAM_API}/sendMessage`, {
-    chat_id: id,
-    text,
-    ...extensions,
-  });
 };
