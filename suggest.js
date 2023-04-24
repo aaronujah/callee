@@ -44,9 +44,9 @@ exports.newSuggestion = async (id, user) => {
   medium = medium[Math.floor(Math.random() * medium.length)];
   low = low[Math.floor(Math.random() * low.length)];
 
-  sendContact(id, high, "High");
-  sendContact(id, medium, "Medium");
-  sendContact(id, low, "Low");
+  sender(id, high, "High");
+  sender(id, medium, "Medium");
+  sender(id, low, "Low");
   return { high, medium, low };
 };
 
