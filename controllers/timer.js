@@ -1,5 +1,5 @@
-const User = require("./models/Users");
-const { sendMessage } = require("./sendMessage");
+const User = require("../models/Users");
+const { sendMessage } = require("../sendMessage");
 
 exports.timer = async (body) => {
   let id = body.message.from.id;

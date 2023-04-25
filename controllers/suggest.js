@@ -1,6 +1,6 @@
-const User = require("./models/Users");
-const Contact = require("./models/Contacts");
-const { sendMessage, sendContact } = require("./sendMessage");
+const User = require("../models/Users");
+const Contact = require("../models/Contacts");
+const { sendMessage, sendContact } = require("../sendMessage");
 
 exports.suggest = async (body) => {
   let id = body.message.from.id;

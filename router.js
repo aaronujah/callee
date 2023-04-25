@@ -1,6 +1,3 @@
-const User = require("./models/Users");
-const Contact = require("./models/Contacts");
-
 const { sendMessage } = require("./sendMessage");
 const { start } = require("./controllers/start");
 const {

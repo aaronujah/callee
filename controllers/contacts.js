@@ -1,6 +1,6 @@
-const User = require("./models/Users");
-const Contact = require("./models/Contacts");
-const { sendMessage } = require("./sendMessage");
+const User = require("../models/Users");
+const Contact = require("../models/Contacts");
+const { sendMessage } = require("../sendMessage");
 
 exports.contacts = async (body) => {
   let id = body.message.from.id;

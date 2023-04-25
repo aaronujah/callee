@@ -1,4 +1,4 @@
-const User = require("./models/Users");
+const User = require("../models/Users");
 
 exports.start = async (body) => {
   let { first_name, id, last_name } = body.message.from;

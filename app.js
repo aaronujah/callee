@@ -3,7 +3,7 @@ require("dotenv").config({ path: "./config.env" });
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const { controller } = require("./controllers");
+const { router } = require("./router");
 
 const { TOKEN, SERVER_URL } = process.env;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
@@ -28,7 +28,7 @@ app.get(URI, (req, res) => {
 });
 
 app.post(URI, async (req, res) => {
-  await controller(req.body);
+  await router(req.body);
   return res.send();
 });
 
