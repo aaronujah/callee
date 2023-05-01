@@ -150,3 +150,24 @@ exports.addRemark = async (body) => {
     );
   }
 };
+exports.seeList = async (body) => {
+  let id = body.message.from.id;
+
+  user = await User.findOne({ chatId: id });
+
+  if (!user) {
+    text = `You don't have an account yet. Create an account using  /start`;
+    return sendMessage(id, text);
+  }
+
+  highList = await Contact.find({ createdBy: user._id, priority: "High" });
+  mediumList = await Contact.find({ createdBy: user._id, priority: "Medium" });
+  lowList = await Contact.find({ createdBy: user._id, priority: "Low" });
+
+  console.log(highList);
+  highText = highList.map((contact) => {
+    return `${contact.name} : ${contact.phoneNumber}`;
+  });
+  console.log(highText);
+  return sendMessage(user.chatId, highText);
+};

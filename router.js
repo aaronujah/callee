@@ -5,6 +5,7 @@ const {
   saveContact,
   addContactPriority,
   addRemark,
+  seeList,
 } = require("./controllers/contacts");
 const { timer, setAutoTime } = require("./controllers/timer");
 const { help } = require("./controllers/help");
@@ -23,6 +24,8 @@ exports.router = async (body) => {
     await timer(body);
   } else if (bodyText === "/suggest") {
     await suggest(body);
+  } else if (bodyText === "/seelist") {
+    await seeList(body);
   } else if (bodyText === "/help") {
     await help(body);
   } else if (
